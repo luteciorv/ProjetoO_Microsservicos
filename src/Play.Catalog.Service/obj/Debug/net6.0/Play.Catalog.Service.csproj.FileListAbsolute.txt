@@ -30,3 +30,16 @@ C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\obj\Debug\net6.0\ref
 C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\obj\Debug\net6.0\Play.Catalog.Service.pdb
 C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\obj\Debug\net6.0\Play.Catalog.Service.genruntimeconfig.cache
 C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\obj\Debug\net6.0\ref\Play.Catalog.Service.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\AWSSDK.Core.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\AWSSDK.SecurityToken.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\DnsClient.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\MongoDB.Bson.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\MongoDB.Driver.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\MongoDB.Driver.Core.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\MongoDB.Libmongocrypt.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\SharpCompress.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\Snappier.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\ZstdSharp.dll
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Codigos\ProjetoO_Microsservices\src\Play.Catalog.Service\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
