@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Play.Catalog.Service.DTOs;
-using Play.Catalog.Service.Entities;
 using Play.Catalog.Service.Extensions;
-using Play.Catalog.Service.Repositories;
+using Play.Catalog.Service.Repositories.Interfaces;
 
 namespace Play.Catalog.Service.Controllers
 {
@@ -11,11 +9,11 @@ namespace Play.Catalog.Service.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly ItemsRepository _repository;
+        private readonly IItemsRepository _repository;
 
-        public ItemsController()
+        public ItemsController(IItemsRepository itemsRepository)
         {
-            _repository = new ItemsRepository();
+            _repository = itemsRepository;
         }
 
         [HttpGet]

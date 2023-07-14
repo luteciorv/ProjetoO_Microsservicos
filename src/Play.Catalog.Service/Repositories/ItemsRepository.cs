@@ -1,19 +1,17 @@
 ﻿using MongoDB.Driver;
 using Play.Catalog.Service.Entities;
+using Play.Catalog.Service.Repositories.Interfaces;
 
 namespace Play.Catalog.Service.Repositories
 {
-    public class ItemsRepository
+    public class ItemsRepository : IItemsRepository
     {
         private const string _collectionName = "items";
         private readonly IMongoCollection<Item> _dbCollection;
         private readonly FilterDefinitionBuilder<Item> _filterBuilder;
 
-        public ItemsRepository()
-        {
-            var mongoClient = new MongoClient("mongodb://localhost:27017");
-            var database = mongoClient.GetDatabase("Catalog");
-
+        public ItemsRepository(IMongoDatabase database)
+        {         
             _dbCollection = database.GetCollection<Item>(_collectionName);
             _filterBuilder = Builders<Item>.Filter;
         }
@@ -29,7 +27,7 @@ namespace Play.Catalog.Service.Repositories
 
         public async Task CreateAsync(Item entityToCreate)
         {
-            if(entityToCreate is null)
+            if (entityToCreate is null)
                 throw new ArgumentNullException(nameof(entityToCreate));
 
             await _dbCollection.InsertOneAsync(entityToCreate);
