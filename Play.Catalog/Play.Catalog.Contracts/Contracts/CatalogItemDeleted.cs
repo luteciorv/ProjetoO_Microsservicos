@@ -1,4 +1,4 @@
-﻿namespace Play.Catalog.Contracts.Contracts
+﻿namespace Play.Catalog.Contracts
 {
     public record CatalogItemDeleted(Guid ItemId);
 }

@@ -1,4 +1,4 @@
-﻿using Play.Catalog.Contracts.Contracts;
+﻿using Play.Catalog.Contracts;
 using Play.Catalog.Service.DTOs;
 using Play.Catalog.Service.Entities;
 

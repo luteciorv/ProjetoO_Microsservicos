@@ -1,4 +1,4 @@
-﻿namespace Play.Catalog.Contracts.Contracts
+﻿namespace Play.Catalog.Contracts
 {
     public record CatalogItemCreated(Guid ItemId, string Name, string Description);
 }
