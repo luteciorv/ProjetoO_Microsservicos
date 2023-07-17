@@ -7,7 +7,7 @@ namespace Play.Inventory.Service.Entities
         public InventoryItem(Guid userId, Guid itemId, int amount)
         {
             UserId = userId;
-            ItemId = itemId;
+            CatalogItemId = itemId;
             Amount = amount;
             AcquiredDate = DateTimeOffset.UtcNow;
         }
@@ -16,7 +16,7 @@ namespace Play.Inventory.Service.Entities
         public DateTimeOffset CreatedDate { get; set;}
 
         public Guid UserId { get; private set; }
-        public Guid ItemId { get; private set; }
+        public Guid CatalogItemId { get; private set; }
         public int Amount { get; private set; }
         public DateTimeOffset AcquiredDate { get; private set; }
 
