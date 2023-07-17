@@ -2,10 +2,10 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Play.Catalog.Service.Settings;
-using Play.Catalog.Service.Entities;
-using Play.Catalog.Service.Repositories.Interfaces;
-using Play.Catalog.Service.Repositories;
+using Play.Commom.Settings;
+using Play.Common.Repositories.Interfaces;
+using Play.Commom.Entities;
+using Play.Commom.Repositories;
 
 namespace Play.Catalog.Service.Extensions
 {

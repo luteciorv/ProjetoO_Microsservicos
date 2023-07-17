@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using Play.Commom.Entities;
 using Play.Common.Repositories.Interfaces;
+using System.Linq.Expressions;
 
 namespace Play.Commom.Repositories
 {
@@ -18,11 +19,19 @@ namespace Play.Commom.Repositories
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync() =>
             await _dbCollection.Find(_filterBuilder.Empty).ToListAsync();
 
+        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter) =>
+            await _dbCollection.Find(filter).ToListAsync();
+
         public async Task<TEntity> GetAsync(Guid id)
         {
             var filter = _filterBuilder.Eq(i => i.Id, id);
             return await _dbCollection.Find(filter).FirstOrDefaultAsync();
         }
+
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter) =>
+            await _dbCollection.Find(filter).FirstOrDefaultAsync();
+
+
 
         public async Task CreateAsync(TEntity entityToCreate)
         {
@@ -45,6 +54,6 @@ namespace Play.Commom.Repositories
         {
             var filter = _filterBuilder.Eq(existingEntity => existingEntity.Id, id);
             DeleteResult deleteResult = await _dbCollection.DeleteOneAsync(filter);
-        }
+        } 
     }
 }

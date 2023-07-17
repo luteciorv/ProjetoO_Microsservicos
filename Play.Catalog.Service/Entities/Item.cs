@@ -1,4 +1,5 @@
 ﻿using Play.Catalog.Service.DTOs;
+using Play.Commom.Entities;
 
 namespace Play.Catalog.Service.Entities
 {

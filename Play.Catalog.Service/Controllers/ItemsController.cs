@@ -2,7 +2,7 @@
 using Play.Catalog.Service.DTOs;
 using Play.Catalog.Service.Entities;
 using Play.Catalog.Service.Extensions;
-using Play.Catalog.Service.Repositories.Interfaces;
+using Play.Common.Repositories.Interfaces;
 
 namespace Play.Catalog.Service.Controllers
 {
