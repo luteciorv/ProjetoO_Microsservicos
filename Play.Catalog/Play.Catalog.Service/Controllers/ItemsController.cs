@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MassTransit;
+using MassTransit.Testing;
+using Microsoft.AspNetCore.Mvc;
 using Play.Catalog.Service.DTOs;
 using Play.Catalog.Service.Entities;
 using Play.Catalog.Service.Extensions;
@@ -11,10 +13,12 @@ namespace Play.Catalog.Service.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IRepository<Item> _itemsRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public ItemsController(IRepository<Item> itemsRepository)
+        public ItemsController(IRepository<Item> itemsRepository, IPublishEndpoint publishEndpoint)
         {
             _itemsRepository = itemsRepository;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -30,8 +34,7 @@ namespace Play.Catalog.Service.Controllers
         public async Task<ActionResult<ReadItemDto>> Get([FromRoute] Guid id)
         {
             var item = await _itemsRepository.GetAsync(id);
-            if(item is null)
-                return NotFound();
+            if(item is null)  return NotFound();
 
             return Ok(item.MapToReadItemDto());
         }
@@ -43,19 +46,21 @@ namespace Play.Catalog.Service.Controllers
 
             await _itemsRepository.CreateAsync(item);
 
+            await _publishEndpoint.Publish(item.MapToCatalogItemCreated());
+
             return CreatedAtAction(nameof(Get), new { item.Id }, item);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ReadItemDto>> Put([FromRoute] Guid id, [FromBody] UpdateItemDto updateItemDto)
         {
-            var existingItem = await _itemsRepository.GetAsync(id);
-            if (existingItem is null)
-                return NotFound();
+            var item = await _itemsRepository.GetAsync(id);
+            if (item is null) return NotFound();
 
-            existingItem.Update(updateItemDto);
+            item.Update(updateItemDto);
+            await _itemsRepository.UpdateAsync(item);
 
-            await _itemsRepository.UpdateAsync(existingItem);
+            await _publishEndpoint.Publish(item.MapToCatalogItemUpdated());
 
             return NoContent();
         }
@@ -63,11 +68,12 @@ namespace Play.Catalog.Service.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var existingItem = await _itemsRepository.GetAsync(id);
-            if (existingItem is null)
-                return NotFound();
-
+            var item = await _itemsRepository.GetAsync(id);
+            if (item is null) return NotFound();
+                
             await _itemsRepository.DeleteAsync(id);
+
+            await _publishEndpoint.Publish(item.MapToCatalogItemDeleted());
 
             return NoContent();
         }
