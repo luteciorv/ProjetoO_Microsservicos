@@ -22,6 +22,10 @@ namespace Play.Common.Extensions
                     var rabbitMQSettings = configuration?.GetSection(nameof(RabbitMQSettings)).Get<RabbitMQSettings>();
                     configurator.Host(rabbitMQSettings?.Host);
                     configurator.ConfigureEndpoints(context, new KebabCaseEndpointNameFormatter(serviceSettings?.Name, false));
+                    configurator.UseMessageRetry(retryConigurator =>
+                    {
+                        retryConigurator.Interval(3, TimeSpan.FromSeconds(5));
+                    });
                 });
             });
         }

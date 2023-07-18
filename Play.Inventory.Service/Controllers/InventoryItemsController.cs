@@ -11,35 +11,27 @@ namespace Play.Inventory.Service.Controllers
     [ApiController]
     public class InventoryItemsController : ControllerBase
     {
-        private readonly IRepository<InventoryItem> _repository;
-        private readonly CatalogClient _catalogClient;
+        private readonly IRepository<InventoryItem> _inventoryRepository;
+        private readonly IRepository<CatalogItem> _catalogRepository;
 
-        public InventoryItemsController(IRepository<InventoryItem> repository, CatalogClient catalogClient)
+        public InventoryItemsController(IRepository<InventoryItem> repository, IRepository<CatalogItem> catalogRepository)
         {
-            _repository = repository;
-            _catalogClient = catalogClient;
+            _inventoryRepository = repository;
+            _catalogRepository = catalogRepository;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReadInventoryItemDto>> Post([FromBody] AddInventoryItemDto itemDto)
+        public async Task<ActionResult> Post([FromBody] AddInventoryItemDto itemDto)
         {
-            var item = await _repository.GetAsync(i => i.UserId == itemDto.UserId && i.CatalogItemId == itemDto.ItemId);
+            var item = await _inventoryRepository.GetAsync(i => i.UserId == itemDto.UserId && i.CatalogItemId == itemDto.ItemId);
             if (item is null)
             {
-                await _repository.CreateAsync(itemDto.MapToItem());
-
-                var catalogItems = await _catalogClient.GetCatalogItemsAsync();
-                if (catalogItems is null)
-                    return NotFound();
-
-                var catalogItemDto = catalogItems.Single(catalogItem => catalogItem.Id == itemDto.ItemId);
-                var inventoryDto = itemDto.MapToItem().MapToReadItemDto(catalogItemDto.Name, catalogItemDto.Description);
-
-                return CreatedAtAction(nameof(Get), new { itemDto.UserId }, inventoryDto);
+                await _inventoryRepository.CreateAsync(itemDto.MapToItem());
+                return Ok();
             }
             
             item.Stack(itemDto.Amount);
-            await _repository.UpdateAsync(item);
+            await _inventoryRepository.UpdateAsync(item);
 
             return NoContent();
         }
@@ -47,11 +39,9 @@ namespace Play.Inventory.Service.Controllers
         [HttpGet("{userId:guid}")]
         public async Task<ActionResult<IEnumerable<ReadInventoryItemDto>>> Get([FromRoute] Guid userId)
         {
-            var catalogItems = await _catalogClient.GetCatalogItemsAsync();
-            if (catalogItems is null) 
-                return NotFound();
-
-            var inventoryItems = await _repository.GetAllAsync(item => item.UserId == userId);
+            var inventoryItems = await _inventoryRepository.GetAllAsync(item => item.UserId == userId);
+            var inventoryItemsIds = inventoryItems.Select(item => item.CatalogItemId);
+            var catalogItems = await _catalogRepository.GetAllAsync(c => inventoryItemsIds.Contains(c.Id));
 
             var inventoryItemsDto = inventoryItems.Select(inventoryItem =>
             {
