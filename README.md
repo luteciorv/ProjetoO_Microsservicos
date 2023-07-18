@@ -15,5 +15,11 @@
         - API REST
 
 ### Telas do Projeto
-	* Swagger
-![](Images/nome-imagem.png?raw=true)
+	* Pastas
+        ![](Images/pastas.png?raw=true)
+
+        * Swagger - Play.Catalog
+        ![](Images/swagger-play-catalog.png?raw=true)
+
+        * Swagger - Play.Inventory
+        ![](Images/swagger-play-inventory.png?raw=true)
