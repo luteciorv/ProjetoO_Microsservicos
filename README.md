@@ -16,10 +16,10 @@
 
 ### Telas do Projeto
 	* Pastas
-        ![](Images/pastas.png?raw=true)
+![](Images/pastas.png?raw=true)
 
         * Swagger - Play.Catalog
-        ![](Images/swagger-play-catalog.png?raw=true)
+![](Images/swagger-play-catalog.png?raw=true)
 
         * Swagger - Play.Inventory
-        ![](Images/swagger-play-inventory.png?raw=true)
+![](Images/swagger-play-inventory.png?raw=true)
